@@ -12,7 +12,13 @@ const User = mongoose.model(
       unique: true
     },
     password: {
-      type: String
+      type: String,
+      required: true
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   })
 )
@@ -21,7 +27,8 @@ const validateUser = (user) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(3).required()
+    password: Joi.string().min(3).required(),
+    isAdmin: Joi.boolean()
   })
 
   return schema.validate(user)

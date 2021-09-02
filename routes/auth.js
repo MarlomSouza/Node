@@ -5,14 +5,15 @@ const bcrypt = require('bcrypt')
 const express = require('express')
 const router = express.Router()
 
-const generateToken = ({ _id, email }) => {
+const generateToken = ({ _id, email, isAdmin }) => {
   return jwt.sign(
     {
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
       _id,
-      email
+      email,
+      isAdmin
     },
-    config.get('jwtPrivateKey')
+    config.get('jwtPrivateKey'), 
   )
 }
 
@@ -21,9 +22,9 @@ router.post('/', async (req, res) => {
     const { error } = validateLogin(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const { email, password } = req.body
+    const { email, password, isAdmin } = req.body
 
-    let user = await User.findOne({ email }).limit(1).select({ email: 1, _id: 1, password: 1 })
+    let user = await User.findOne({ email }).limit(1).select({ email: 1, _id: 1, password: 1, isAdmin: 1 })
 
     if (!user) return res.status(400).send('Invalid email or password')
 
