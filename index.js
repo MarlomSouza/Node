@@ -1,5 +1,6 @@
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
+const erro = require('./middleware/erro')
 const mongoose = require('mongoose')
 const genres = require('./routes/genres')
 const customers = require('./routes/customers')
@@ -34,6 +35,6 @@ app.use('/api/movies', movies)
 app.use('/api/rentals', rentals)
 app.use('/api/users', users)
 app.use('/api/auth', auth)
-
+app.use(erro)
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
