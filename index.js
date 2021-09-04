@@ -11,11 +11,18 @@ const auth = require('./routes/auth')
 const express = require('express')
 const app = express()
 const config = require('config')
+const logger = require('./middleware/logger')
+
+process.on('uncaughtException', (ex) => {
+  logger.error(ex)
+})
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERRO: jwtPrivateKey is not defined')
   process.exit(1)
 }
+
+throw new Error('Something failed during startup')
 
 mongoose.set('debug', true)
 
