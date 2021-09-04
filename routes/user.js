@@ -12,7 +12,6 @@ const cryptPassword = async (password) => {
 
 router.get('/me', auth, async (req, res) => {
   const { _id } = req.user
-  throw new Error('lll')
   const user = await User.findById(_id).select('-password')
   res.send(user)
 })
