@@ -1,4 +1,4 @@
-const logger = require('./logger')
+const logger = require('../startup/logger')
 
 module.exports = (err, req, res, next) => {
   console.error('ERROR =>', err)

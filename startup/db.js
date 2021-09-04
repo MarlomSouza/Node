@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const config = require('config')
-const logger = require('../middleware/logger')
+const logger = require('./logger')
 
 module.exports = async () => {
   mongoose.set('debug', true)
